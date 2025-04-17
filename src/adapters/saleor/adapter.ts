@@ -4,7 +4,7 @@ import type { StoreAdapter } from "@/adapters/adapter";
 import type { Page } from "@/types/adapter.types";
 import { GetPageDocument, type GetPageQuery } from "./gql/graphql";
 
-class SaleorStoreAdapter implements StoreAdapter {
+export class SaleorStoreAdapter implements StoreAdapter {
     private fetch(input: RequestInit) {
         return fetch(globalConfiguration.SALEOR_API_ENDPOINT, {
             method: "POST",
@@ -13,6 +13,20 @@ class SaleorStoreAdapter implements StoreAdapter {
             },
             ...input
         })
+    }
+
+    private parsePage(page : GetPageQuery["page"]) {
+        const metadata: Record<string, string> = {};
+
+        page?.metadata.forEach(({ key, value }) => {
+            metadata[key] = value;
+        })
+
+        return {
+            name: page?.title,
+            description: page?.content,
+            metadata  
+        }
     }
 
     getPage(slug: string) {
@@ -26,18 +40,8 @@ class SaleorStoreAdapter implements StoreAdapter {
                 })
             })
             .then(res => res.json())
-            .then(async ({ page }: GetPageQuery) => {
-                const metadata: Record<string, string> = {};
-
-                page?.metadata.forEach(({ key, value }) => {
-                    metadata[key] = value;
-                })
-
-                return {
-                    name: page?.title,
-                    description: page?.content,
-                    metadata  
-                }
+            .then(({ page }: GetPageQuery) => {
+                return this.parsePage(page);
             })
             .catch(err  => resume(Effect.fail(err)))
         })
