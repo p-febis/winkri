@@ -7,15 +7,18 @@
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
+    "generate": "graphql-codegen",
     "format": "prettier --write src/**/*.{ts,tsx}"
   },
   "dependencies": {
+    "@effect/platform": "^0.80.10",
     "@radix-ui/react-slot": "^1.2.0",
     "@react-router/node": "^7.5.0",
     "@react-router/serve": "^7.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "effect": "^3.14.10",
+    "graphql": "^16.10.0",
     "isbot": "^5.1.17",
     "lucide-react": "^0.488.0",
     "react": "^19.0.0",
@@ -27,6 +30,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
+    "@graphql-codegen/cli": "^5.0.5",
     "@react-router/dev": "^7.5.0",
     "@tailwindcss/vite": "^4.0.0",
     "@types/node": "^20",
