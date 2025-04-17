@@ -4,7 +4,7 @@ import { HeaderLinks } from "./HeaderLinks"
 
 export const Header = () => {
     return (
-        <header className="container mx-auto">
+        <header className="container mx-auto pb-6">
             <nav className="h-20 flex items-center justify-between px-8 border-b border-dashed border-neutral-300">
                 <div className="hidden md:block">
                     <HeaderLinks />

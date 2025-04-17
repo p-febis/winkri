@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import type { Page } from "@/types/adapter.types";
+import type { Page } from "src/types/adapter.types";
 
 export interface StoreAdapter {
-    getPage(slug: string): Effect.Effect<Page, Error, never>;
+    getPage(slug: string): Effect.Effect<Page | null, Error, never>;
 }

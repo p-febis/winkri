@@ -1,8 +1,8 @@
-import { globalConfiguration } from "@/config/global";
 import { Effect } from "effect";
-import type { StoreAdapter } from "@/adapters/adapter";
-import type { Page } from "@/types/adapter.types";
 import { GetPageDocument, type GetPageQuery } from "./gql/graphql";
+import type { Page } from "src/types/adapter.types";
+import type { StoreAdapter } from "../adapter";
+import { globalConfiguration } from "src/config/global";
 
 export class SaleorStoreAdapter implements StoreAdapter {
     private fetch(input: RequestInit) {
@@ -15,12 +15,16 @@ export class SaleorStoreAdapter implements StoreAdapter {
         })
     }
 
-    private parsePage(page : GetPageQuery["page"]) {
+    private parsePage(page : GetPageQuery["page"]): Page | null {
         const metadata: Record<string, string> = {};
 
         page?.metadata.forEach(({ key, value }) => {
             metadata[key] = value;
         })
+
+        if(!page?.title || !page?.content) {
+            return null;
+        }
 
         return {
             name: page?.title,
@@ -30,7 +34,7 @@ export class SaleorStoreAdapter implements StoreAdapter {
     }
 
     getPage(slug: string) {
-        return Effect.async<Page, Error, never>((resume) => {
+        return Effect.async<Page | null, Error, never>((resume) => {
             this.fetch({
                 body: JSON.stringify({
                     query: GetPageDocument,
@@ -40,8 +44,9 @@ export class SaleorStoreAdapter implements StoreAdapter {
                 })
             })
             .then(res => res.json())
+            .then(res => res["data"])
             .then(({ page }: GetPageQuery) => {
-                return this.parsePage(page);
+                resume(Effect.succeed(this.parsePage(page)))
             })
             .catch(err  => resume(Effect.fail(err)))
         })
