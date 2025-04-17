@@ -1,36 +1,36 @@
-import { Effect } from "effect";
-import { GetPageDocument, type GetPageQuery } from "./gql/graphql";
-import type { Page } from "src/types/adapter.types";
-import type { StoreAdapter } from "../adapter";
-import { globalConfiguration } from "src/config/global";
+import { Effect } from 'effect';
+import { GetPageDocument, type GetPageQuery } from './gql/graphql';
+import type { Page } from 'src/types/adapter.types';
+import type { StoreAdapter } from '../adapter';
+import { globalConfiguration } from 'src/config/global';
 
 export class SaleorStoreAdapter implements StoreAdapter {
     private fetch(input: RequestInit) {
         return fetch(globalConfiguration.SALEOR_API_ENDPOINT, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
-            ...input
-        })
+            ...input,
+        });
     }
 
-    private parsePage(page : GetPageQuery["page"]): Page | null {
+    private parsePage(page: GetPageQuery['page']): Page | null {
         const metadata: Record<string, string> = {};
 
         page?.metadata.forEach(({ key, value }) => {
             metadata[key] = value;
-        })
+        });
 
-        if(!page?.title || !page?.content) {
+        if (!page?.title || !page?.content) {
             return null;
         }
 
         return {
             name: page?.title,
             description: page?.content,
-            metadata  
-        }
+            metadata,
+        };
     }
 
     getPage(slug: string) {
@@ -39,16 +39,16 @@ export class SaleorStoreAdapter implements StoreAdapter {
                 body: JSON.stringify({
                     query: GetPageDocument,
                     variables: {
-                        slug
-                    }
+                        slug,
+                    },
+                }),
+            })
+                .then((res) => res.json())
+                .then((res) => res['data'])
+                .then(({ page }: GetPageQuery) => {
+                    resume(Effect.succeed(this.parsePage(page)));
                 })
-            })
-            .then(res => res.json())
-            .then(res => res["data"])
-            .then(({ page }: GetPageQuery) => {
-                resume(Effect.succeed(this.parsePage(page)))
-            })
-            .catch(err  => resume(Effect.fail(err)))
-        })
+                .catch((err) => resume(Effect.fail(err)));
+        });
     }
 }

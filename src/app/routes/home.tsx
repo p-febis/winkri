@@ -1,7 +1,7 @@
-import { globalConfiguration } from "src/config/global";
-import type { Route } from "./+types/home";
-import { HeroSection } from "src/features/Hero/components/HeroSection";
-import { Effect } from "effect";
+import { globalConfiguration } from 'src/config/global';
+import type { Route } from './+types/home';
+import { HeroSection } from 'src/features/Hero/components/HeroSection';
+import { Effect } from 'effect';
 
 export function meta() {
     return [
@@ -13,20 +13,18 @@ export function meta() {
 export async function loader() {
     const adapter = globalConfiguration.STORE_ADAPTER;
     const pageEffect = await Effect.runPromiseExit(
-        adapter.getPage("hero-section")
+        adapter.getPage('hero-section'),
     );
     let page = null;
 
-    if(pageEffect._tag === "Success") {
+    if (pageEffect._tag === 'Success') {
         page = pageEffect.value;
     }
 
-    return { page }
+    return { page };
 }
 
-export default function Home({
-    loaderData,
-}: Route.ComponentProps) {
+export default function Home({ loaderData }: Route.ComponentProps) {
     const { page } = loaderData;
     return (
         <section className="container mx-auto">
