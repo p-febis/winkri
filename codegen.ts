@@ -7,7 +7,7 @@ const config: CodegenConfig = {
 	schema: schemaUrl,
 	documents: "src/adapters/saleor/graphql/*.graphql",
 	generates: {
-		"src/adapter/saleor/gql/": {
+		"src/adapters/saleor/gql/": {
 			preset: "client",
 			plugins: [],
 			config: {
