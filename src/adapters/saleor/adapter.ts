@@ -2,11 +2,16 @@ import { Effect } from 'effect';
 import { GetPageDocument, type GetPageQuery } from './gql/graphql';
 import type { Page } from 'src/types/adapter.types';
 import type { StoreAdapter } from '../adapter';
-import { serverConfiguration } from 'src/config/server';
 
 export class SaleorStoreAdapter implements StoreAdapter {
+    SALEOR_API_ENDPOINT: string
+
+    constructor(endpoint: string) {
+        this.SALEOR_API_ENDPOINT = endpoint;
+    }
+
     private fetch(input: RequestInit) {
-        return fetch(serverConfiguration.SALEOR_API_ENDPOINT, {
+        return fetch(this.SALEOR_API_ENDPOINT, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
