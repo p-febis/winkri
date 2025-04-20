@@ -19,7 +19,7 @@ export const HeroSection = ({ page }: { page: Page | null }) => {
     }
 
     return (
-        <section className="h-[calc(100vh-8rem)] overflow-hidden rounded-2xl mx-8 md:mx-0">
+        <div className="h-[calc(100vh-8rem)] overflow-hidden rounded-2xl mx-8 md:mx-0">
             <img
                 src={imageUrl}
                 width={1596}
@@ -48,6 +48,6 @@ export const HeroSection = ({ page }: { page: Page | null }) => {
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     );
 };

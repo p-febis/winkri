@@ -1,7 +1,8 @@
-import { globalConfiguration } from 'src/config/global';
 import type { Route } from './+types/home';
 import { HeroSection } from 'src/features/Hero/components/HeroSection';
 import { Effect } from 'effect';
+import { serverConfiguration } from 'src/config/server';
+import { Collection } from 'src/features/Collection/components/Collection';
 
 export function meta() {
     return [
@@ -11,7 +12,7 @@ export function meta() {
 }
 
 export async function loader() {
-    const adapter = globalConfiguration.STORE_ADAPTER;
+    const adapter = serverConfiguration.STORE_ADAPTER;
     const pageEffect = await Effect.runPromiseExit(
         adapter.getPage('hero-section'),
     );
@@ -27,8 +28,13 @@ export async function loader() {
 export default function Home({ loaderData }: Route.ComponentProps) {
     const { page } = loaderData;
     return (
-        <section className="container mx-auto">
-            <HeroSection page={page} />
-        </section>
+        <main className="space-y-6">
+            <section className="container mx-auto">
+                <HeroSection page={page} />
+            </section>
+            <section className="container mx-auto">
+                <Collection />
+            </section>
+        </main>
     );
 }
