@@ -1,6 +1,5 @@
 import type { Route } from './+types/home';
 import { HeroSection } from 'src/features/Hero/components/HeroSection';
-import { Effect } from 'effect';
 import { serverConfiguration } from 'src/config/server';
 import { Collection } from 'src/features/Collection/components/Collection';
 
@@ -13,28 +12,27 @@ export function meta() {
 
 export async function loader() {
     const adapter = serverConfiguration.STORE_ADAPTER;
-    const pageEffect = await Effect.runPromiseExit(
-        adapter.getPage('hero-section'),
+    const page = await adapter.getPage('hero-section');
+    const collection = await adapter.getCollection(
+        'featured-products',
+        'default-channel',
     );
-    let page = null;
 
-    if (pageEffect._tag === 'Success') {
-        page = pageEffect.value;
-    }
-
-    return { page };
+    return { page, collection };
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-    const { page } = loaderData;
+    const { page, collection } = loaderData;
     return (
         <main className="space-y-6">
             <section className="container mx-auto">
                 <HeroSection page={page} />
             </section>
-            <section className="container mx-auto">
-                <Collection />
-            </section>
+            {collection && (
+                <section className="container mx-auto">
+                    <Collection collection={collection} />
+                </section>
+            )}
         </main>
     );
 }

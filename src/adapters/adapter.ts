@@ -1,6 +1,6 @@
-import { Effect } from 'effect';
-import type { Page } from 'src/types/adapter.types';
+import type { Page, Collection } from 'src/types/adapter.types';
 
 export interface StoreAdapter {
-    getPage(slug: string): Effect.Effect<Page | null, Error, never>;
+    getPage(slug: string): Promise<Page | null>;
+    getCollection(slug: string, channel: string): Promise<Collection | null>;
 }
