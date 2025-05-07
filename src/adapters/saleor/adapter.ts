@@ -4,10 +4,10 @@ import {
     type GetCollectionQuery,
     type GetPageQuery,
     type ProductListItemFragment,
-} from './gql/graphql';
-import type { Page, Collection, Product } from 'src/types/adapter.types';
-import type { StoreAdapter } from '../adapter';
-import { formatMoney } from 'src/utils/money';
+} from "./gql/graphql";
+import type { Page, Collection, Product } from "src/types/adapter.types";
+import type { StoreAdapter } from "../adapter";
+import { formatMoney } from "src/utils/money";
 
 export class SaleorStoreAdapter implements StoreAdapter {
     SALEOR_API_ENDPOINT: string;
@@ -18,15 +18,15 @@ export class SaleorStoreAdapter implements StoreAdapter {
 
     private fetch(input: RequestInit) {
         return fetch(this.SALEOR_API_ENDPOINT, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             ...input,
         });
     }
 
-    private parsePage(page: GetPageQuery['page']): Page | null {
+    private parsePage(page: GetPageQuery["page"]): Page | null {
         const metadata: Record<string, string> = {};
 
         page?.metadata.forEach(({ key, value }) => {
@@ -63,7 +63,7 @@ export class SaleorStoreAdapter implements StoreAdapter {
     }
 
     private parseCollection(
-        collection: GetCollectionQuery['collection'],
+        collection: GetCollectionQuery["collection"],
     ): Collection | null {
         if (
             !collection ||
@@ -77,7 +77,7 @@ export class SaleorStoreAdapter implements StoreAdapter {
         return {
             id: collection.id,
             name: collection.name,
-            description: collection.description ?? '',
+            description: collection.description ?? "",
             slug: collection.slug,
             products: this.parseProducts(
                 collection.products?.edges.map((edge) => edge.node),
@@ -96,7 +96,7 @@ export class SaleorStoreAdapter implements StoreAdapter {
                 }),
             })
                 .then((res) => res.json())
-                .then((res) => res['data'])
+                .then((res) => res["data"])
                 .then(({ page }: GetPageQuery) => {
                     return this.parsePage(page);
                 });
@@ -117,10 +117,10 @@ export class SaleorStoreAdapter implements StoreAdapter {
                 }),
             })
                 .then((res) => res.json())
-                .then((res) => res['data'])
+                .then((res) => res["data"])
                 .then(({ collection }: GetCollectionQuery) => {
                     if (!collection) {
-                        throw new Error('No collection');
+                        throw new Error("No collection");
                     }
                     return this.parseCollection(collection);
                 });

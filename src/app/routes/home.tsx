@@ -1,21 +1,21 @@
-import type { Route } from './+types/home';
-import { HeroSection } from 'src/features/Hero/components/HeroSection';
-import { serverConfiguration } from 'src/config/server';
-import { Collection } from 'src/features/Collection/components/Collection';
+import type { Route } from "./+types/home";
+import { HeroSection } from "src/features/Hero/components/HeroSection";
+import { serverConfiguration } from "src/config/server";
+import { Collection } from "src/features/Collection/components/Collection";
 
 export function meta() {
     return [
-        { title: 'New React Router App' },
-        { name: 'description', content: 'Welcome to React Router!' },
+        { title: "New React Router App" },
+        { name: "description", content: "Welcome to React Router!" },
     ];
 }
 
-export async function loader() {
+export async function loader({ params }: Route.LoaderArgs) {
     const adapter = serverConfiguration.STORE_ADAPTER;
-    const page = await adapter.getPage('hero-section');
+    const page = await adapter.getPage("hero-section");
     const collection = await adapter.getCollection(
-        'featured-products',
-        'default-channel',
+        "featured-products",
+        params.channel,
     );
 
     return { page, collection };

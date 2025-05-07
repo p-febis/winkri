@@ -1,6 +1,6 @@
-import { Link } from 'react-router';
-import { globalConfiguration } from 'src/config/global';
-import { HeaderLinks } from './HeaderLinks';
+import { globalConfiguration } from "src/config/global";
+import { HeaderLinks } from "./HeaderLinks";
+import { LinkWithChannel } from "../LinkWithChannel";
 
 export const Header = () => {
     return (
@@ -10,14 +10,14 @@ export const Header = () => {
                     <HeaderLinks />
                 </div>
                 <div>
-                    <Link to="/">
+                    <LinkWithChannel to="/">
                         <img
                             src="/logo.svg"
                             width={150}
                             height={25}
                             alt={globalConfiguration.STORE_NAME}
                         />
-                    </Link>
+                    </LinkWithChannel>
                 </div>
                 <div>User icons</div>
             </nav>

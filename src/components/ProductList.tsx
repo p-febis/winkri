@@ -1,5 +1,5 @@
-import type { Product } from 'src/types/adapter.types';
-import { ProductCard } from '../ProductCard/ProductCard';
+import type { Product } from "src/types/adapter.types";
+import { ProductCard } from "./ProductCard";
 
 export const ProductList = ({ products }: { products: Product[] }) => {
     return (

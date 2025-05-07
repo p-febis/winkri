@@ -12,6 +12,6 @@ type GlobalConfiguration = {
  * */
 
 export const globalConfiguration: GlobalConfiguration = {
-    STORE_NAME: 'WINKRI',
-    ACCENT_COLOR: '#BB396B',
+    STORE_NAME: "WINKRI",
+    ACCENT_COLOR: "#BB396B",
 };

@@ -1,14 +1,14 @@
-import type { Page } from 'src/types/adapter.types';
-import edjsHTML from 'editorjs-html';
-import xss from 'xss';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router';
-import { ArrowUpRight } from 'lucide-react';
+import type { Page } from "src/types/adapter.types";
+import edjsHTML from "editorjs-html";
+import xss from "xss";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight } from "lucide-react";
+import { LinkWithChannel } from "src/components/LinkWithChannel";
 
 const parser = edjsHTML();
 
 export const HeroSection = ({ page }: { page: Page | null }) => {
-    const imageUrl = page?.metadata['hero-image-url'];
+    const imageUrl = page?.metadata["hero-image-url"];
     const headerText = page?.name;
     const description = page?.description
         ? parser.parse(JSON.parse(page.description))
@@ -30,13 +30,13 @@ export const HeroSection = ({ page }: { page: Page | null }) => {
                 <div className="absolute flex w-full items-center justify-center border-none">
                     <div className="-translate-y-6 rounded-md bg-white px-4 py-2">
                         <Button className="p-5" asChild variant="outline">
-                            <Link
+                            <LinkWithChannel
                                 to="/products"
                                 className="inline-flex items-center gap-2"
                             >
                                 Shop now!
                                 <ArrowUpRight size={64} />
-                            </Link>
+                            </LinkWithChannel>
                         </Button>
                     </div>
                 </div>

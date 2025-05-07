@@ -1,5 +1,5 @@
 export const AbstractElement1 = ({
-    fill = 'black',
+    fill = "black",
     className,
 }: {
     fill?: string;

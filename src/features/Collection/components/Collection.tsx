@@ -1,9 +1,9 @@
-import type { Collection as CollectionType } from 'src/types/adapter.types';
-import edjsHTML from 'editorjs-html';
-import xss from 'xss';
-import { AbstractElement1 } from 'src/components/Abstracts/AbstractElement1';
-import { globalConfiguration } from 'src/config/global';
-import { ProductList } from 'src/components/ProductList/ProductList';
+import type { Collection as CollectionType } from "src/types/adapter.types";
+import edjsHTML from "editorjs-html";
+import xss from "xss";
+import { AbstractElement1 } from "src/components/Abstracts/AbstractElement1";
+import { globalConfiguration } from "src/config/global";
+import { ProductList } from "src/components/ProductList";
 
 const parser = edjsHTML();
 
@@ -23,7 +23,7 @@ export const Collection = ({ collection }: { collection: CollectionType }) => {
                 <div
                     className="text-sm text-neutral-500"
                     dangerouslySetInnerHTML={{
-                        __html: xss(description ?? ''),
+                        __html: xss(description ?? ""),
                     }}
                 />
             </div>

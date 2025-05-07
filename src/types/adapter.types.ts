@@ -1,4 +1,4 @@
-import type { ProductListItemFragment } from 'src/adapters/saleor/gql/graphql';
+import type { ProductListItemFragment } from "src/adapters/saleor/gql/graphql";
 
 export type Page = {
     name: string;
@@ -24,6 +24,6 @@ export type Product = {
     name: string;
     slug: string;
 
-    category?: ProductListItemFragment['category'];
-    thumbnail?: ProductListItemFragment['thumbnail'];
+    category?: ProductListItemFragment["category"];
+    thumbnail?: ProductListItemFragment["thumbnail"];
 };
