@@ -5,8 +5,8 @@ import { Collection } from "src/features/Collection/components/Collection";
 
 export function meta() {
     return [
-        { title: "New React Router App" },
-        { name: "description", content: "Welcome to React Router!" },
+        { title: "Winkri" },
+        { name: "description", content: "Excell while you sell!" },
     ];
 }
 
