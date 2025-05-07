@@ -9,7 +9,7 @@ export const LinkWithChannel = ({ ...props }: LinkProps) => {
         return <Link {...props}></Link>;
     }
 
-    const toWithChannel = `${channel}${props.to}`;
+    const toWithChannel = `/${channel}${props.to}`;
 
     return <Link {...props} to={toWithChannel}></Link>;
 };

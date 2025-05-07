@@ -1,13 +1,13 @@
 import { createContext, useState, type PropsWithChildren } from "react";
+import { useParams } from "react-router";
 
 export const ChannelContext = createContext<
     [string, React.Dispatch<React.SetStateAction<string>>]
->(["default-channel", () => {}]);
+>(["", () => {}]);
 
 export const ChannelProvider = ({ children }: PropsWithChildren) => {
-    // TODO: Pull default value from Saleor or list
-
-    const state = useState("default-channel");
+    const { channel } = useParams();
+    const state = useState(channel ?? "default-channel");
 
     return (
         <ChannelContext.Provider value={state}>
