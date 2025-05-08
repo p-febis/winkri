@@ -39,8 +39,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </head>
             <body>
                 <ChannelProvider>
-                  <Header />
-                  {children}
+                    <Header />
+                    {children}
                 </ChannelProvider>
                 <ScrollRestoration />
                 <Scripts />

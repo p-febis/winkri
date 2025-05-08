@@ -4,11 +4,11 @@ import { LinkWithChannel } from "./LinkWithChannel";
 
 export const ProductCard = ({ product }: { product: Product }) => {
     return (
-        <div className="group relative rounded-3xl border bg-white hover:-translate-y-2 transition">
+        <div className="group relative rounded-3xl border bg-white transition hover:-translate-y-2">
             <LinkWithChannel
                 to={`/products/${product.slug}`}
                 aria-label={`Go to ${product.name}'s page`}
-                className="absolute h-full w-full"
+                className="absolute z-10 h-full w-full"
             />
             <span className="absolute top-4 right-4 me-2 h-fit w-fit rounded-full border bg-gray-100 px-3 py-0.5 text-sm font-medium text-neutral-800">
                 {product.category?.name}
@@ -16,7 +16,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
             <img
                 src={product.thumbnail?.url}
                 alt={product.thumbnail?.alt ?? `Image of ${product.name}`}
-                className="group-hover:scale-[1.1] transition"
+                className="transition group-hover:scale-[1.1]"
                 width={512}
                 height={512}
             />
