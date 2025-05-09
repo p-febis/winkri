@@ -1,0 +1,9 @@
+query GetProducts($first: Int!, $channel: String!) {
+  products(first: $first, channel: $channel) {
+    edges {
+      node {
+        ...ProductListItem
+      }
+    }
+  }
+}

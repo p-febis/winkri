@@ -1,8 +1,10 @@
 import {
     GetCollectionDocument,
     GetPageDocument,
+    GetProductsDocument,
     type GetCollectionQuery,
     type GetPageQuery,
+    type GetProductsQuery,
     type ProductListItemFragment,
 } from "./gql/graphql";
 import type { Page, Collection, Product } from "src/types/adapter.types";
@@ -123,6 +125,33 @@ export class SaleorStoreAdapter implements StoreAdapter {
                         throw new Error("No collection");
                     }
                     return this.parseCollection(collection);
+                });
+        } catch {
+            return null;
+        }
+    }
+
+    async getProducts(count: number, channel: string) {
+        try {
+            return this.fetch({
+                body: JSON.stringify({
+                    query: GetProductsDocument,
+                    variables: {
+                        first: count,
+                        channel,
+                    },
+                }),
+            })
+                .then((res) => res.json())
+                .then((res) => res["data"])
+                .then(({ products }: GetProductsQuery) => {
+                    if (!products) {
+                        throw new Error("No products");
+                    }
+
+                    return this.parseProducts(
+                        products.edges.map(({ node }) => node),
+                    );
                 });
         } catch {
             return null;

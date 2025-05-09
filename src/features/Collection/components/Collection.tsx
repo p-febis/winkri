@@ -13,7 +13,7 @@ export const Collection = ({ collection }: { collection: CollectionType }) => {
         : null;
 
     return (
-        <div className="relative z-0 mx-8 min-h-[calc(100vh-8rem)] overflow-hidden rounded-2xl border border-dashed border-neutral-300 md:mx-0">
+        <div className="relative z-0 mx-8 overflow-hidden rounded-2xl border border-dashed border-neutral-300 md:mx-0">
             <div className="flex h-36 w-full flex-col justify-center gap-4 px-12">
                 <h1 className="text-3xl font-bold">{collection.name}</h1>
                 <AbstractElement1
@@ -27,7 +27,9 @@ export const Collection = ({ collection }: { collection: CollectionType }) => {
                     }}
                 />
             </div>
-            <ProductList products={collection.products} />
+            <div className="p-12">
+              <ProductList products={collection.products} />
+            </div>
         </div>
     );
 };
