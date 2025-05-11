@@ -16,7 +16,7 @@ export default function Products({ loaderData }: Route.ComponentProps) {
 
     return (
         <main className="space-y-6">
-            <section className="container mx-auto space-y-6">
+            <section className="container px-8 md:px-0 mx-auto space-y-6">
                 <ProductsHeading page={page} />
                 <ProductList products={products} />
             </section>

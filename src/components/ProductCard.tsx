@@ -4,7 +4,7 @@ import { LinkWithChannel } from "./LinkWithChannel";
 
 export const ProductCard = ({ product, id }: { product: Product, id?: number }) => {
     return (
-        <div className="group relative rounded-3xl border bg-white transition hover:-translate-y-2">
+        <div className="group relative rounded-3xl border bg-white transition hover:-translate-y-2 overflow-hidden">
             <LinkWithChannel
                 to={`/products/${product.slug}`}
                 aria-label={`Go to ${product.name}'s page`}

@@ -16,7 +16,7 @@ export const ProductsHeading = ({ page }: { page: Page | null }) => {
     }
 
     return (
-        <section className="relative z-0 mx-8 flex flex-col overflow-hidden rounded-lg border border-dashed border-neutral-300 px-4 py-12 md:mx-0">
+        <section className="relative z-0 flex flex-col overflow-hidden rounded-lg border border-dashed border-neutral-300 px-4 py-12 md:mx-0">
             <AbstractElement1
                 className="absolute -top-14 right-0 -z-10"
                 width={125}
