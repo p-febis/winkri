@@ -1,6 +1,7 @@
 import { globalConfiguration } from "src/config/global";
 import { HeaderLinks } from "./HeaderLinks";
 import { LinkWithChannel } from "../LinkWithChannel";
+import { User } from "lucide-react";
 
 export const Header = () => {
     return (
@@ -19,7 +20,9 @@ export const Header = () => {
                         />
                     </LinkWithChannel>
                 </div>
-                <div>User icons</div>
+                <div>
+                  <User />
+                </div>
             </nav>
         </header>
     );
