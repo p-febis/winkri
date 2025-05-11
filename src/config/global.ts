@@ -13,7 +13,7 @@ type GlobalConfiguration = {
  * */
 
 export const globalConfiguration: GlobalConfiguration = {
-    STORE_NAME: "WINKRI",
-    ACCENT_COLOR: "#BB396B",
-    PRODUCT_COUNT: 20
+    STORE_NAME: import.meta.env.VITE_STORE_NAME ?? "Winkri",
+    ACCENT_COLOR: import.meta.env.VITE_ACCENT_COLOR ?? "#3b82f6",
+    PRODUCT_COUNT: import.meta.env.VITE_PRODUCT_COUNT ?? 20
 };

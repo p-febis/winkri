@@ -6,7 +6,7 @@ type ServerConfiguration = {
     STORE_ADAPTER: StoreAdapter;
 };
 
-const SALEOR_API_ENDPOINT = "http://localhost:8000/graphql/";
+const SALEOR_API_ENDPOINT = process.env.SALEOR_API_ENDPOINT ?? "http://localhost:8000/graphql/";
 
 export const serverConfiguration: ServerConfiguration = {
     SALEOR_API_ENDPOINT,
