@@ -2,9 +2,9 @@ import type { Product } from "src/types/adapter.types";
 import { collapsePrice } from "src/utils/money";
 import { LinkWithChannel } from "./LinkWithChannel";
 
-export const ProductCard = ({ product, key }: { product: Product, key?: number }) => {
+export const ProductCard = ({ product, id }: { product: Product, id?: number }) => {
     return (
-        <div className="group relative rounded-3xl border bg-white transition hover:-translate-y-2" key={key}>
+        <div className="group relative rounded-3xl border bg-white transition hover:-translate-y-2">
             <LinkWithChannel
                 to={`/products/${product.slug}`}
                 aria-label={`Go to ${product.name}'s page`}
@@ -16,7 +16,7 @@ export const ProductCard = ({ product, key }: { product: Product, key?: number }
             <img
                 src={product.thumbnail?.url}
                 alt={product.thumbnail?.alt ?? `Image of ${product.name}`}
-                loading={(key && key < 4) ? "eager" : "lazy"}
+                loading={(id && id < 4) ? "eager" : "lazy"}
                 className="transition group-hover:scale-[1.1]"
                 width={512}
                 height={512}
