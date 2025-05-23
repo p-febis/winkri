@@ -1,0 +1,51 @@
+query GetProduct($slug: String!, $channel: String!) {
+  product(slug: $slug, channel: $channel) {
+    id
+    name
+    slug
+    description
+    seoTitle
+    seoDescription
+    thumbnail(size: 1024, format: WEBP) {
+      url
+      alt
+    }
+    category {
+      id
+      name
+    }
+    productVariants(first: 100) {
+      edges {
+        node {
+          id
+          name
+          quantityAvailable
+          pricing {
+            price {
+              gross {
+                currency
+                amount
+              }
+            }
+          }
+        }
+      }
+    }
+    pricing {
+      priceRange {
+        start {
+          gross {
+            amount
+            currency
+          }
+        }
+        stop {
+          gross {
+            amount
+            currency
+          }
+        }
+      }
+    }
+  }
+}

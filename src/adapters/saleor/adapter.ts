@@ -1,9 +1,11 @@
 import {
     GetCollectionDocument,
     GetPageDocument,
+    GetProductDocument,
     GetProductsDocument,
     type GetCollectionQuery,
     type GetPageQuery,
+    type GetProductQuery,
     type GetProductsQuery,
     type ProductListItemFragment,
 } from "./gql/graphql";
@@ -46,22 +48,26 @@ export class SaleorStoreAdapter implements StoreAdapter {
         };
     }
 
+    private parseProduct(productData: ProductListItemFragment): Product {
+        return {
+            ...productData,
+            pricing: {
+                min: formatMoney(
+                    productData.pricing?.priceRange?.start?.gross.currency,
+                    productData.pricing?.priceRange?.start?.gross.amount,
+                ),
+                max: formatMoney(
+                    productData.pricing?.priceRange?.stop?.gross.currency,
+                    productData.pricing?.priceRange?.stop?.gross.amount,
+                ),
+            },
+        };
+    }
+
     private parseProducts(products?: ProductListItemFragment[]): Product[] {
         if (!products) return [];
 
-        return products.map((product) => ({
-            ...product,
-            pricing: {
-                min: formatMoney(
-                    product.pricing?.priceRange?.start?.gross.currency,
-                    product.pricing?.priceRange?.start?.gross.amount,
-                ),
-                max: formatMoney(
-                    product.pricing?.priceRange?.stop?.gross.currency,
-                    product.pricing?.priceRange?.stop?.gross.amount,
-                ),
-            },
-        }));
+        return products.map((product) => this.parseProduct(product));
     }
 
     private parseCollection(
@@ -88,73 +94,71 @@ export class SaleorStoreAdapter implements StoreAdapter {
     }
 
     async getPage(slug: string) {
-        try {
-            return this.fetch({
-                body: JSON.stringify({
-                    query: GetPageDocument,
-                    variables: {
-                        slug,
-                    },
-                }),
-            })
-                .then((res) => res.json())
-                .then((res) => res["data"])
-                .then(({ page }: GetPageQuery) => {
-                    return this.parsePage(page);
-                });
-        } catch {
-            return null;
-        }
+        return this.fetch({
+            body: JSON.stringify({
+                query: GetPageDocument,
+                variables: {
+                    slug,
+                },
+            }),
+        })
+            .then((res) => res.json())
+            .then((res) => res["data"])
+            .then(({ page }: GetPageQuery) => {
+                return this.parsePage(page);
+            });
     }
 
     async getCollection(slug: string, channel: string) {
-        try {
-            return this.fetch({
-                body: JSON.stringify({
-                    query: GetCollectionDocument,
-                    variables: {
-                        slug,
-                        channel,
-                    },
-                }),
-            })
-                .then((res) => res.json())
-                .then((res) => res["data"])
-                .then(({ collection }: GetCollectionQuery) => {
-                    if (!collection) {
-                        throw new Error("No collection");
-                    }
-                    return this.parseCollection(collection);
-                });
-        } catch {
-            return null;
-        }
+        return this.fetch({
+            body: JSON.stringify({
+                query: GetCollectionDocument,
+                variables: {
+                    slug,
+                    channel,
+                },
+            }),
+        })
+            .then((res) => res.json())
+            .then((res) => res["data"])
+            .then(({ collection }: GetCollectionQuery) => {
+                return this.parseCollection(collection);
+            });
     }
 
     async getProducts(count: number, channel: string) {
-        try {
-            return this.fetch({
-                body: JSON.stringify({
-                    query: GetProductsDocument,
-                    variables: {
-                        first: count,
-                        channel,
-                    },
-                }),
-            })
-                .then((res) => res.json())
-                .then((res) => res["data"])
-                .then(({ products }: GetProductsQuery) => {
-                    if (!products) {
-                        throw new Error("No products");
-                    }
+        return this.fetch({
+            body: JSON.stringify({
+                query: GetProductsDocument,
+                variables: {
+                    first: count,
+                    channel,
+                },
+            }),
+        })
+            .then((res) => res.json())
+            .then((res) => res["data"])
+            .then(({ products }: GetProductsQuery) => {
+                return this.parseProducts(
+                    products?.edges.map(({ node }) => node),
+                );
+            });
+    }
 
-                    return this.parseProducts(
-                        products.edges.map(({ node }) => node),
-                    );
-                });
-        } catch {
-            return null;
-        }
+    async getProduct(slug: string, channel: string) {
+        return this.fetch({
+            body: JSON.stringify({
+                query: GetProductDocument,
+                variables: {
+                    slug,
+                    channel,
+                },
+            }),
+        })
+            .then((res) => res.json())
+            .then((res) => res["data"])
+            .then(({ product }: GetProductQuery) => {
+                return product ? this.parseProduct(product) : null;
+            });
     }
 }
