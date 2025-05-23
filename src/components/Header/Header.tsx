@@ -21,7 +21,7 @@ export const Header = () => {
                     </LinkWithChannel>
                 </div>
                 <div>
-                  <User />
+                    <User />
                 </div>
             </nav>
         </header>

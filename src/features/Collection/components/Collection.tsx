@@ -28,7 +28,7 @@ export const Collection = ({ collection }: { collection: CollectionType }) => {
                 />
             </div>
             <div className="p-12">
-              <ProductList products={collection.products} />
+                <ProductList products={collection.products} />
             </div>
         </div>
     );

@@ -6,7 +6,10 @@ import { ProductList } from "src/components/ProductList";
 
 export async function loader({ params }: Route.LoaderArgs) {
     const adapter = serverConfiguration.STORE_ADAPTER;
-    const [page, products] = await Promise.all([adapter.getPage("products-heading"), adapter.getProducts(globalConfiguration.PRODUCT_COUNT, params.channel)]);
+    const [page, products] = await Promise.all([
+        adapter.getPage("products-heading"),
+        adapter.getProducts(globalConfiguration.PRODUCT_COUNT, params.channel),
+    ]);
 
     return { page, products: products ?? [] };
 }
@@ -16,7 +19,7 @@ export default function Products({ loaderData }: Route.ComponentProps) {
 
     return (
         <main className="space-y-6">
-            <section className="container px-8 md:px-0 mx-auto space-y-6">
+            <section className="container mx-auto space-y-6 px-8 md:px-0">
                 <ProductsHeading page={page} />
                 <ProductList products={products} />
             </section>
