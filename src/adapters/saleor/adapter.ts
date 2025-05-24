@@ -12,6 +12,19 @@ import {
 import type { Page, Collection, Product } from "src/types/adapter.types";
 import type { StoreAdapter } from "../adapter";
 import { formatMoney } from "src/utils/money";
+import editorJS from "editorjs-html";
+import xss from "xss";
+
+const parser = editorJS();
+
+function parseEdjsString(template?: string | null) {
+  if(!template) {
+    return "";
+  }
+
+  return xss(parser.parse(JSON.parse(template)));
+
+}
 
 export class SaleorStoreAdapter implements StoreAdapter {
     SALEOR_API_ENDPOINT: string;
@@ -43,7 +56,7 @@ export class SaleorStoreAdapter implements StoreAdapter {
 
         return {
             name: page?.title,
-            description: page?.content,
+            description: parseEdjsString(page?.content),
             metadata,
         };
     }
@@ -85,7 +98,7 @@ export class SaleorStoreAdapter implements StoreAdapter {
         return {
             id: collection.id,
             name: collection.name,
-            description: collection.description ?? "",
+            description: parseEdjsString(collection.description),
             slug: collection.slug,
             products: this.parseProducts(
                 collection.products?.edges.map((edge) => edge.node),

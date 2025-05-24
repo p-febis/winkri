@@ -1,15 +1,9 @@
 import type { Page } from "src/types/adapter.types";
-import edjsHTML from "editorjs-html";
-import xss from "xss";
 import { AbstractElement1 } from "src/components/Abstracts/AbstractElement1";
 import { globalConfiguration } from "src/config/global";
 
-const parser = edjsHTML();
-
 export const ProductsHeading = ({ page }: { page: Page | null }) => {
-    const description = page?.description
-        ? parser.parse(JSON.parse(page.description))
-        : null;
+    const description = page?.description;
 
     if (!page || !description) {
         return null;
@@ -26,7 +20,7 @@ export const ProductsHeading = ({ page }: { page: Page | null }) => {
             <div
                 className="mt-8 max-w-[80%] space-y-6 text-neutral-500"
                 dangerouslySetInnerHTML={{
-                    __html: xss(description),
+                    __html: description,
                 }}
             />
         </section>

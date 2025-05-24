@@ -1,18 +1,12 @@
 import type { Page } from "src/types/adapter.types";
-import edjsHTML from "editorjs-html";
-import xss from "xss";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import { LinkWithChannel } from "src/components/LinkWithChannel";
 
-const parser = edjsHTML();
-
 export const HeroSection = ({ page }: { page: Page | null }) => {
     const imageUrl = page?.metadata["hero-image-url"];
     const headerText = page?.name;
-    const description = page?.description
-        ? parser.parse(JSON.parse(page.description))
-        : null;
+    const description = page?.description;
 
     if (!page || !imageUrl || !headerText || !description) {
         return null;
@@ -47,7 +41,7 @@ export const HeroSection = ({ page }: { page: Page | null }) => {
                     <div className="mt-8 space-y-6 text-sm text-neutral-500">
                         <div
                             dangerouslySetInnerHTML={{
-                                __html: xss(description),
+                                __html: description,
                             }}
                         />
                     </div>
