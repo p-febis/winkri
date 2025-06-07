@@ -31,7 +31,7 @@ export const ProductCard = ({
                 <span className="me-2 h-fit w-fit max-w-2/5 truncate rounded-full border bg-gray-100 px-3 py-0.5 text-sm text-neutral-800">
                     {product.name}
                 </span>
-                <span className="me-2 h-fit w-fit rounded-full border border-green-500 bg-green-100 px-3 py-0.5 text-sm text-neutral-800">
+                <span className="me-2 h-fit w-fit rounded-full truncate border border-green-500 bg-green-100 px-3 py-0.5 text-sm text-neutral-800">
                     {collapsePrice(product.pricing)}
                 </span>
             </div>
