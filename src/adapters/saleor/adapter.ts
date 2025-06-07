@@ -18,12 +18,11 @@ import xss from "xss";
 const parser = editorJS();
 
 function parseEdjsString(template?: string | null) {
-  if(!template) {
-    return "";
-  }
+    if (!template) {
+        return "";
+    }
 
-  return xss(parser.parse(JSON.parse(template)));
-
+    return xss(parser.parse(JSON.parse(template)));
 }
 
 export class SaleorStoreAdapter implements StoreAdapter {
